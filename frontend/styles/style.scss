@@ -43,10 +43,10 @@ button {
 
 /* navbar */
 .navbar .connect_navbar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
 }
 .ju367v9c {
   color: white !important;
@@ -61,6 +61,19 @@ button {
   ) !important;
   box-shadow: inset 0 0 10px rgb(27 53 253 / 40%),
     0 0 9px 3px rgb(27 253 156 / 10%) !important;
+}
+.nav-item .ju367va  button{
+  font-size: 0.7em;
+}
+.nav-item .so__sticky {
+  padding: 0.8em;
+
+  border-radius: 0.4em;
+}
+
+.nav-item .so__sticky svg{
+ font-size: 1.5em;
+  border-radius: 0.4em;
 }
 .navbar-brand > img {
   width: 50px;
@@ -743,12 +756,20 @@ li {
   font-weight: bold;
   text-transform: uppercase;
   color: #fff;
+  margin-bottom: 0;
   font-size: 29px;
 }
 
 .begin p {
   color: #fff;
   font-size: 19px;
+}
+.begin {
+   margin: auto !important;
+}
+.begin p{
+  width: 90%;
+  margin: auto !important;
 }
 
 .buy-nft {
@@ -855,18 +876,19 @@ li {
 // }
 
 .nft-img h3 {
+  text-transform: capitalize;
   font-size: 18px;
   padding: 12px 0;
   text-align: left;
 }
 
 .epic {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: stretch;
-  align-content: center;
-  flex-wrap: nowrap;
+     display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
 }
 
 .epic img {
@@ -905,7 +927,8 @@ li {
 .eth-sale {
   display: flex;
   padding-top: 18px;
-  font-size: 0.7em;
+  font-size: 0.9em;
+  font-weight: normal;
   justify-content: space-between;
 }
 
@@ -997,6 +1020,7 @@ li {
 }
 
 .create_and_sell h1 {
+  text-transform: uppercase;
   color: white;
 }
 .create_and_sell .col30 img {
@@ -1632,8 +1656,39 @@ select,
 }
 
 .btn_submit_nft {
-  margin-top: 1em;
-  padding: 1em 0;
+  font-size: 15px;
+  padding: 0.7em 2.7em !important;
+  letter-spacing: 0.06em;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  line-height: 1.4em;
+  border: 2px solid var(--purple);
+  background: linear-gradient(
+    to right,
+    rgba(253, 27, 245, 0.219) 1%,
+    transparent 40%,
+    transparent 60%,
+    rgba(27, 253, 156, 0.1) 100%
+  );
+  color: white;
+  box-shadow: inset 0 0 10px rgba(27, 53, 253, 0.4),
+    0 0 9px 3px rgba(27, 253, 156, 0.1) !important;
+    }
+
+    .btn_submit_nft:before {
+  content: "";
+  position: absolute;
+  width: 1em;
+  top: 0;
+  transition: transform 0.4s ease-in-out;
+  background: linear-gradient(
+    to right,
+    transparent 1%,
+    rgba(253, 27, 185, 0.1) 40%,
+    rgba(27, 253, 156, 0.1) 60%,
+    transparent 100%
+  );
 }
 
 input[type="file"] {
@@ -1680,7 +1735,8 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  border: #ab0061;
+
+  border: #ab0061 !important;
 }
 
 .custom-file-upload {
@@ -1709,8 +1765,8 @@ input[type="submit"] {
 //marketplace
 
 .nft_marketpace header {
-  font-size: 4em;
   margin: 0.7em 0;
+  color: white;
   text-align: left;
 }
 .nft_marketpace_Price {
@@ -1739,6 +1795,7 @@ input[type="submit"] {
 
 .marketplace_nft_text p {
   padding: 0.5em 0 !important;
+  text-transform: capitalize;
 }
 
 .marketplace_btn_buy {
@@ -1942,7 +1999,9 @@ input[type="submit"] {
 }
 .nft_info_id header {
   text-align: left;
-  font-size: 2em;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  font-weight: 600;
   padding: 0.5em 0;
 }
 
@@ -1962,6 +2021,7 @@ input[type="submit"] {
 .nft_info_price_id span {
   font-size: 17px;
   opacity: 0.8;
+  color: #7b3fe4;
 }
 .nft_id_buy_btn {
   margin-top: 1em;
@@ -2087,8 +2147,17 @@ input[type="submit"] {
     width: 100%;
   }
 
+  .nft_details_ID h1 {
+    font-size: 1.1em;
+    font-weight: 600;
+   padding-top: 0.7em;
+}
+
   .col29 {
     width: 45%;
+  }
+  .nav-item .purchase_btn{
+    padding-left: 10px !important;
   }
 .nav_connect_btn{
   display: flex !important;
@@ -2214,8 +2283,19 @@ input[type="submit"] {
 
   .nft-img::before {
     width: 100%;
-    margin: 22px auto;
   }
+  .gradient-box:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin:  -4px;
+    border-radius: inherit;
+    background: linear-gradient(to right, rgb(60, 0, 255), rgb(242, 0, 255));
+}
 
   .nft-mg {
     width: 80%;
@@ -2278,7 +2358,7 @@ display: flex;
     text-align: center;
   }
   .eth-sale {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 }
 
@@ -2291,6 +2371,17 @@ display: flex;
   .container {
      width: 95%; 
  
+}
+
+.create_and_sell .col30 img {
+    width: 30px;
+    padding-bottom: 1em;
+}
+.create_and_sell header{
+  font-size: 2em;
+}
+.forth-section header{
+  font-size: 1.5em;
 }
 
 
@@ -2307,7 +2398,11 @@ display: flex;
     text-align: left;
   }
   .eth-sale {
-    font-size: 0.6em;
+    font-size: 0.9em;
+    padding-top: 2px;
+  }
+  .eth-sale div{
+    font-size: 0.7em;
   }
   .col29 {
     width: 100%;
@@ -2324,9 +2419,34 @@ display: flex;
 }
 
 @media screen and (max-width: 698px) {
+  .col25,
+  .col20,
+  .col29,
+  .col30,
+  .col40,
+  .col50,
+  .col60,
+  .col23 {
+    padding: 5px;
+  }
+  .forth-section p {
+    width: 90%;
+  }
+  .my_nft_box .col29  {
+    padding: 20px;
+    border-radius: 0.6em;
+  }
   .gather {
     text-align: center;
     font-size: 2.5em;
+}
+.create_and_sell header{
+  font-size: 2em;
+}
+
+.my_items header {
+   font-size: 0.6em;
+   text-align: center;
 }
   .create_form {
     width: 100%;
@@ -2351,6 +2471,21 @@ display: flex;
     display: flex;
     flex-direction: column;
 }
+.nft_home_img_width {
+    height:unset;
+    width: 100%;
+    margin: auto;
+}
+.nft_home_img_width img {
+    border-radius: 0.2em !important;
+
+      height:unset;
+
+}
+.nft_marketpace header {
+  font-size: 2em;
+  font-weight: bold;
+}
 }
 .nft_tag img{
   width: 40px;
@@ -2369,6 +2504,10 @@ display: flex;
   .col23 {
     width: 100%;
   }
+
+  .forth-section header{
+  font-size: 1.5em;
+}
 
   .gather {
     font-size: 2em;
@@ -2399,7 +2538,7 @@ display: flex;
   }
 
   .third-section h1 {
-    font-size: 32px;
+    font-size: 1.5em;
   }
   .ending {
     color: #fff;
@@ -2538,6 +2677,9 @@ display: flex;
 @media screen and (max-width: 420px) {
   input[type="file"] {
     font-size: 0.7em;
+  }
+  .epic img{
+    display: none;
   }
 
   .bids-btn a {
@@ -2755,9 +2897,9 @@ font-size: 0.6em;
   }
 
   .first-counter h2 {
-    font-size: 17px;
+    font-size: 11px;
 
-    padding: 0 4px;
+    padding: 15px 4px;
   }
 
   .ending h5 {
@@ -2768,6 +2910,10 @@ font-size: 0.6em;
     color: white;
     font-size: 10px;
   }
+
+  .fav h1 {
+    font-size: 1em;
+}
 }
 
 //anime

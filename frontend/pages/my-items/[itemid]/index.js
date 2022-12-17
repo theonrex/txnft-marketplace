@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../../../components/nft-info/NftInfo";
 import { useSigner } from "wagmi";
+import Loading from "../../../components/Loading";
 
 export default function Itemid() {
   const router = useRouter();
@@ -122,38 +123,42 @@ export default function Itemid() {
 
   return (
     <div>
-      <NftInfo nftData={nftData}>
-        <button
-          icon={<AiOutlineArrowRight className="text-2xl" />}
-          className="bg-blue-500"
-          onClick={() => setIsReselling(!isReselling)}
-        >
-          {isReselling ? "Cancel" : "ReSell NFT"}
-        </button>
-        {isReselling && (
-          <div>
-            <input
-              id="resellprice"
-              placeholder="e.g.10 (In Ether)"
-              label="Resell Price"
-              onChange={(e) =>
-                updateFormInput({ ...formInput, price: e.target.value })
-              }
-            />
-            <button
-              text="Buy Now"
-              icon={<AiOutlineArrowRight className="text-2xl" />}
-              className="nft_id_buy_btn"
-              onClick={() =>
-                resellNFT(nftData.price.toString(), nftData.tokenId)
-              }
-              disabled={isPurchasing}
-            >
-              But Item
-            </button>
-          </div>
-        )}
-      </NftInfo>
+      {!nftData && loading ? (
+        <Loading />
+      ) : (
+        <NftInfo nftData={nftData}>
+          <button
+            icon={<AiOutlineArrowRight className="text-2xl" />}
+            className="purchase-btn"
+            onClick={() => setIsReselling(!isReselling)}
+          >
+            {isReselling ? "Cancel" : "Re-sell NFT"}
+          </button>
+          {isReselling && (
+            <div>
+              <input
+                id="resellprice"
+                placeholder="e.g.10 (In Ether)"
+                label="Resell Price"
+                onChange={(e) =>
+                  updateFormInput({ ...formInput, price: e.target.value })
+                }
+              />
+              <button
+                text="Buy Now"
+                icon={<AiOutlineArrowRight className="text-2xl" />}
+                className="nft_id_buy_btn"
+                onClick={() =>
+                  resellNFT(nftData.price.toString(), nftData.tokenId)
+                }
+                disabled={isPurchasing}
+              >
+                But Item
+              </button>
+            </div>
+          )}
+        </NftInfo>
+      )}
     </div>
   );
 }

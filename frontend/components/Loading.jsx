@@ -5,7 +5,7 @@ import { Oval, ThreeDots } from "react-loader-spinner";
 // Three Dots
 
 const Loading = ({ type = "dots" }) => (
-  <div className="absolute z-30 min-h-screen w-[98.5%] bg-transparent overflow-x-hidden">
+  <div className="container absolute z-30 min-h-screen w-[98.5%] bg-transparent overflow-x-hidden">
     <div className="opacity-30 w-full min-h-screen bg-slate-300"></div>
     <div className="absolute top-[30%] left-[46%] z-50">
       {type === "dots" ? (

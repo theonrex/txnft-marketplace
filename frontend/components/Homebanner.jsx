@@ -250,13 +250,7 @@ function Homebanner() {
             <button className="buy-btn ">
               <a href="/marketplace"> Explore More</a>
             </button>
-            <h3 className="explore-mg">
-              <a href="/marketplace">
-                {" "}
-                <i className="bi bi-play-fill" />
-              </a>{" "}
-              <span>Show More </span>
-            </h3>
+          
           </div>
           <div className="first-counter">
             <h2 className="works">

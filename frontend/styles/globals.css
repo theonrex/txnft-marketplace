@@ -53,9 +53,7 @@ button {
   color: white;
 }
 
-button:hover {
-  background-color: #800044;
-}
+
 
 .imgGrid {
   display: grid;

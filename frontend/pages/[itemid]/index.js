@@ -8,6 +8,7 @@ import { useSigner } from "wagmi";
 import { useRouter } from "next/router";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../../components/nft-info/NftInfo";
+import Loading from "../../components/Loading";
 
 export default function Itemid() {
   const router = useRouter();
@@ -93,17 +94,21 @@ export default function Itemid() {
 
   return (
     <div>
-      <NftInfo nftData={nftData}>
-        <button
-          text="Buy Now"
-          icon={<AiOutlineArrowRight className="text-2xl" />}
-          className="nft_id_buy_btn"
-          onClick={() => buyNFT(nftData.price.toString(), nftData.tokenId)}
-          disabled={isPurchasing}
-        >
-          But Item
-        </button>
-      </NftInfo>
+      {!nftData && loading ? (
+        <Loading />
+      ) : (
+        <NftInfo nftData={nftData}>
+          <button
+            text="Buy Now"
+            icon={<AiOutlineArrowRight className="text-2xl" />}
+            className="nft_id_buy_btn"
+            onClick={() => buyNFT(nftData.price.toString(), nftData.tokenId)}
+            disabled={isPurchasing}
+          >
+            But Item
+          </button>
+        </NftInfo>
+      )}
     </div>
   );
 }

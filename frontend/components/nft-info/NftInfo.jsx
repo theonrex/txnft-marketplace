@@ -104,9 +104,11 @@ export default function NftInfo({ nftData, children }) {
           </div>
           <div className="col50 nft_details_ID">
             <div className="nft_details_ID">
-              <h1 className="text-6xl font-bold text-blue-500">
-                {nftData?.name}
+              <h1 className="text-6xl ">
+               NFT Name: {nftData?.name}
               </h1>
+              <p className="text-gray-600">{nftData?.description}</p>
+
               <h5>
                 <span className="Owned_by">
                   Owned by <br />{" "}
@@ -115,7 +117,6 @@ export default function NftInfo({ nftData, children }) {
                   ? nftData.seller.toString()
                   : nftData.owner.toString()}
               </h5>
-              <p className="text-gray-600">{nftData?.description}</p>
               <div className="current_price_id">
                 <div className="nft_tag">
                   <img src="https://img.icons8.com/3d-fluency/94/null/price-tag-usd.png" />{" "}
@@ -124,13 +125,13 @@ export default function NftInfo({ nftData, children }) {
                 <hr />
                 <p className="">Current price</p>{" "}
                 <p className="nft_info_price_id">
-                  <>{nftData?.price.toString()}</> Matic{" "}
+                    <>{nftData?.price.toString()}</> Matic
+                    
                   <span>
                     {" "}
-                    ${" "}
-                    {usdPrice && nftData
-                      ? Number(usdPrice["matic-network"].usd).toFixed(2) *
-                        Number(nftData.price).toFixed(2)
+                    ${usdPrice && nftData
+                      ? Number(usdPrice["matic-network"].usd).toFixed(32) *
+                        Number(nftData.price).toFixed(32)
                       : null}{" "}
                     USD{" "}
                   </span>

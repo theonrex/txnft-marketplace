@@ -119,7 +119,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <a className="nav-link purchase_btn" href="/createnft">
-                  Create <i className="bi bi-cloud-plus-fill"></i>
+                  Create 
                 </a>
               </li>
             </ul>

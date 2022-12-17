@@ -71,7 +71,7 @@ function About() {
       </div>
 
       <div className="create_and_sell container">
-        <header>Create and sell your NFTs</header>
+        <header>Create and sell <br /> your NFTs</header>
 
         <div className="rowx ">
           <div className="col30">

@@ -73,7 +73,6 @@ const Marketplace = () => {
       console.log("something went wrong ", error);
     }
   }
-  console.log(nfts);
 
   const buyNFT = async (price, tokenId) => {
     setIsPurchasing(true);
@@ -86,7 +85,7 @@ const Marketplace = () => {
 
     let convertedPrice = utils.parseUnits(price.toString(), "ether");
     if (convertedPrice > price) {
-      console.log("inn");
+      console.log("Price");
     }
     const transaction = await nftMarketPlaceContract.buyItem(
       NFT_CONTRACT_ADDRESS,
@@ -162,7 +161,6 @@ const Marketplace = () => {
                 onClick={() => {
                   // buyNFT(nft);
                   router.push(`/${nft.tokenId}`);
-                  console.log("Onclicked on buy button.");
                 }}
               >
                 <div className=" gradient-box epic-img nft_home_img_width">
@@ -183,7 +181,6 @@ const Marketplace = () => {
                   </p>
                 </div> */}
                   <div className="">
-                    <p className="nft_marketpace_Price">OpenSea Link</p>
 
                     <p className="nft_marketpace_Price">
                       <img
@@ -197,8 +194,8 @@ const Marketplace = () => {
                       <span>
                         {" "}
                         {usdPrice && nft
-                          ? Number(usdPrice["matic-network"].usd).toFixed(2) *
-                            Number(nft?.price).toFixed(2)
+                          ? Number(usdPrice["matic-network"].usd).toFixed(22) *
+                            Number(nft?.price).toFixed(22)
                           : null}{" "}
                         USD{" "}
                       </span>
@@ -226,7 +223,9 @@ const Marketplace = () => {
               Create your nfts with link below
               <br />
               <Link href="/">
-                <button>Click here to buy some</button>
+                <button className="purchase-btn">
+                  Click here to buy some
+                </button>
               </Link>
             </div>
           )}

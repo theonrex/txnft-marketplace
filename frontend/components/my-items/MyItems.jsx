@@ -10,7 +10,6 @@ import { useSigner } from "wagmi";
 import Link from "next/link";
 import Loading from "../Loading";
 import { useRouter } from "next/router";
-import Image from "next/image";
 
 export default function MyItems() {
   const [allNFTs, setAllNFTs] = useState([]);
@@ -88,10 +87,9 @@ export default function MyItems() {
                   }}
                 >
                   <div className=" gradient-box epic-img nft_home_img_width">
-                    <Image src={nft.image} alt="img" />
+                    <img src={nft.image} alt="img" />
                   </div>
 
-                  <br />
                   <h3>
                     <span>Name: </span> {nft.name}
                   </h3>
@@ -118,28 +116,14 @@ export default function MyItems() {
                         alt="svgImg"
                         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNDgiIGhlaWdodD0iNDgiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGc+PHBhdGggZD0iTTM5LjQxNjY3LDg2bDUwLjE2NjY3LC03OC44MzMzM2w1MC4xNjY2Nyw3OC44MzMzM2wtNTAuMTY2NjcsMjguNjY2Njd6IiBmaWxsPSIjMzhmZjA2Ij48L3BhdGg+PHBhdGggZD0iTTg5LjU4MzMzLDcuMTY2NjdsNTAuMTY2NjcsNzguODMzMzNsLTUwLjE2NjY3LDI4LjY2NjY3eiIgZmlsbD0iIzQ2Y2MyZSI+PC9wYXRoPjxwYXRoIGQ9Ik0zOS40MTY2Nyw5Ni43NWw1MC4xNjY2NywyOC42NjY2N2w1MC4xNjY2NywtMjguNjY2NjdsLTUwLjE2NjY3LDY4LjA4MzMzeiIgZmlsbD0iIzM4ZmYwNiI+PC9wYXRoPjxwYXRoIGQ9Ik04OS41ODMzMywxMjUuNDE2NjdsNTAuMTY2NjcsLTI4LjY2NjY3bC01MC4xNjY2Nyw2OC4wODMzM3pNMzkuNDE2NjcsODZsNTAuMTY2NjcsLTIxLjVsNTAuMTY2NjcsMjEuNWwtNTAuMTY2NjcsMjguNjY2Njd6IiBmaWxsPSIjNDZjYzJlIj48L3BhdGg+PHBhdGggZD0iTTg5LjU4MzMzLDY0LjVsNTAuMTY2NjcsMjEuNWwtNTAuMTY2NjcsMjguNjY2Njd6IiBmaWxsPSIjMDJmZjJiIj48L3BhdGg+PC9nPjwvZz48L3N2Zz4="
                       />{" "} */}
-                      {nft.price} MATIC
-                    </div>
-                    <div className="eth-sale-icon">
-                      <a className="nav-link-svg " href="#">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={16}
-                          height={16}
-                          fill="currentColor"
-                          className="bi bi-cart3"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                        </svg>
-                      </a>
+                     {nft.price} MATIC
                     </div>
                   </div>
                 </div>{" "}
               </div>
             ))
           ) : (
-            <div className="text-center font-semibold text-base">
+            <div className="eth-sale No_purchase_History">
               No purchase History found.
               <br />
               <Link href="/">Buy Now some</Link>

@@ -161,9 +161,7 @@ export const FavouriteNFTs = () => {
                 <div className="meta-text col50">
                   <p>{favNft?.name}</p>
                   <h3>ID #{favNft?.tokenId}</h3>
-                  <p>
-                    <i className="bi bi-alarm" />{" "}
-                  </p>
+                 
                   <p>
                     <img src={PolygonImg.src} className="polygon" />
                     {Number(favNft?.price).toFixed(3)} MATIC
