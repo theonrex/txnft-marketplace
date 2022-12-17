@@ -2195,7 +2195,7 @@ input[type=submit] {
     padding: 20px;
   }
   .nft-img {
-    margin: 22px auto;
+    margin: 22px 12px;
   }
   .nft_info_id {
     display: flex;
@@ -2250,13 +2250,9 @@ input[type=submit] {
   }
   .eth-sale {
     font-size: 0.9em;
-    padding-top: 2px;
-  }
-  .eth-sale div {
-    font-size: 0.7em;
   }
   .col29 {
-    width: 100%;
+    width: 45%;
   }
   .my_nft_box {
     display: flex;
@@ -2277,7 +2273,7 @@ input[type=submit] {
 .col50,
 .col60,
 .col23 {
-    padding: 5px;
+    padding: 15px;
   }
   .forth-section p {
     width: 90%;

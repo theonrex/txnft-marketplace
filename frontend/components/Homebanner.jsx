@@ -13,7 +13,6 @@ import Web3Modal from "web3modal";
 import Backgroundimg from "../public/assets/cta-shape-right.png";
 import Backgroundimageleft from "../public/assets/cta-2-left.png";
 import { useAccount, useConnect, useSigner, useProvider } from "wagmi";
-import Image from "next/image";
 
 function Homebanner() {
   const [nfts, setNfts] = useState([]);
@@ -69,87 +68,7 @@ function Homebanner() {
     }
   }
 
-  // const listAnItem = async () => {
-
-  //   const nftContract = new Contract(
-  //     NFT_CONTRACT_ADDRESS,
-  //     NFT_CONTRACT_ABI,
-  //     provider
-  //   );
-
-  //   const contract = new Contract(
-  //     NFT_MARKETPLACE_ADDRESS,
-  //     NFT_MARKETPLACE_ABI,
-  //     provider
-  //   );
-  //      try {
-  //        const data = await contract.getAllListedItems();
-
-  //        const items = await Promise.all(
-  //          data?.map(async (i) => {
-  //            let price = utils.formatUnits(i.price.toString(), "ether");
-  //            const tokenUri = await nftContract.tokenURI(i?.tokenId);
-  //            const metaData = await axios.get(tokenUri);
-  //            let item = {
-  //              price,
-  //              tokenId: i.tokenId.toNumber(),
-  //              seller: i.seller,
-  //              owner: i.owner,
-  //              image: metaData.data.image,
-  //              name: metaData.data.name,
-  //              description: metaData.data.description,
-  //            };
-  //            return item;
-  //          })
-  //        );
-  //        setNfts(items);
-  //        setLoadingState("loaded");
-  //      } catch (error) {
-  //             console.log("Something went wrong", error);
-
-  //      }
-
-  //  };
-
-  // async function loadNFTs() {
-  //   /* create a generic provider and query for unsold market items */
-  //   // const provider = new ethers.providers.JsonRpcProvider(
-  //   //   "https://polygon-mumbai.g.alchemy.com/v2/vvDJmy7binUQorwIIY8CIjv-4N2Bx6CQ"
-  //   // );
-
-  //   const nftContract = new Contract(
-  //     NFT_CONTRACT_ADDRESS,
-  //     NFT_CONTRACT_ABI,
-  //     provider
-  //   );
-
-  //   const contract = new Contract(
-  //     NFT_MARKETPLACE_ADDRESS,
-  //     NFT_MARKETPLACE_ABI,
-  //     provider
-  //   );
-  //   const data = await contract.getAllListedItems();
-
-  //   const items = await Promise.all(
-  //     data?.map(async (i) => {
-  //       let price = utils.formatUnits(i.price.toString(), "ether");
-  //       const tokenUri = await nftContract.tokenURI(i?.tokenId);
-  //       const metaData = await axios.get(tokenUri);
-  //       let item = {
-  //         price,
-  //         tokenId: i.tokenId.toNumber(),
-  //         seller: i.seller,
-  //         owner: i.owner,
-  //         image: metaData.data.image,
-  //         name: metaData.data.name,
-  //         description: metaData.data.description,
-  //       };
-  //       return item;
-  //     })
-  //   );
-  //   setNfts(items);
-  //   setLoadingState("loaded");
-  // }
+  
 
   const homeNft = nfts[1];
 
@@ -158,39 +77,37 @@ function Homebanner() {
   }
   console.log(nfts);
 
-  // const buyNFT = async (price, tokenId) => {
-  //   setIsPurchasing(true);
+  const buyNFT = async (price, tokenId) => {
+    setIsPurchasing(true);
 
-  //   const nftMarketPlaceContract = new Contract(
-  //     NFT_MARKETPLACE_ADDRESS,
-  //     NFT_MARKETPLACE_ABI,
-  //     signer
-  //   );
+    const nftMarketPlaceContract = new Contract(
+      NFT_MARKETPLACE_ADDRESS,
+      NFT_MARKETPLACE_ABI,
+      signer
+    );
 
-  //   let convertedPrice = utils.parseUnits(price.toString(), "ether");
+    let convertedPrice = utils.parseUnits(price.toString(), "ether");
 
-  //   const transaction = await nftMarketPlaceContract.buyItem(
-  //     NFT_CONTRACT_ADDRESS,
-  //     tokenId,
-  //     {
-  //       value: convertedPrice,
-  //     }
-  //   );
-  //   loadNFTs();
-  //   await transaction.wait();
-  //   await router.push("/my-items");
-  //   setIsPurchasing(false);
-  // };
+    const transaction = await nftMarketPlaceContract.buyItem(
+      NFT_CONTRACT_ADDRESS,
+      tokenId,
+      {
+        value: convertedPrice,
+      }
+    );
+    loadNFTs();
+    await transaction.wait();
+    await router.push("/my-items");
+    setIsPurchasing(false);
+  };
 
-  //connect wallet alert
-  // useEffect(() => {
-  //   connectWallet();
-  // }, []);
-  // const connectWallet = () => {
-  //   if (typeof window !== "undefined") {
-  //     alert("connect wallet");
-  //   }
-  // };
+  // connect wallet alert
+
+  const connectWallet = () => {
+    if (typeof window !== "undefined") {
+      alert("connect wallet");
+    }
+  };
 
   const placeBid = () => {
     if (typeof window !== "undefined") {
@@ -198,34 +115,7 @@ function Homebanner() {
     }
   };
 
-  // Gets the minted NFT data
-  const getMintedNFT = async (tokenId) => {
-    try {
-      const { ethereum } = window;
-
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const nftContract = new ethers.Contract(
-          nftContractAddress,
-          NFT.abi,
-          signer
-        );
-
-        let tokenUri = await nftContract.tokenURI(tokenId);
-        let data = await axios.get(tokenUri);
-        let meta = data.data;
-
-        setMiningStatus(1);
-        setMintedNFT(meta.image);
-      } else {
-        console.log("Ethereum object doesn't exist!");
-      }
-    } catch (error) {
-      console.log(error);
-      setTxError(error.message);
-    }
-  };
+ 
 
   return (
     <div className="  first-section" id="Home" data-aos="fade-right">
@@ -267,7 +157,7 @@ function Homebanner() {
         <div className="col50 nfthead">
           <div className="bid gradient-box">
             <div>
-              <Image
+              <img
                 src={homeNft?.image}
                 alt="nft imaage"
                 className="homenft_img"
@@ -286,7 +176,7 @@ function Homebanner() {
               </ul>
               <p>{homeNft?.price} MATIC</p>
             </div>
-            {/* <div className="bid-btn">
+            <div className="bid-btn">
                   {!isConnected ? (
                     <button className="purchase-btn" onClick={connectWallet}>
                       Purchase
@@ -306,7 +196,7 @@ function Homebanner() {
                     {" "}
                     <a href="/#"> Place a bid</a>
                   </button>
-                </div> */}
+                </div>
           </div>
         </div>
       </div>

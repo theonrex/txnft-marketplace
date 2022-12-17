@@ -6,7 +6,7 @@ import MainLayout from "../../components/layouts/MainLayout";
 export default function mylisteditems() {
   return (
     <MainLayout>
-      <div>
+      <div className="container">
         <header>Your Listed NFTs</header>
       </div>
       <SellerItems />

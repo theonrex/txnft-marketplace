@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { ethers } from "ethers";
-import { nftAddress, nftMarketplaceAddress } from "../../config/networkAddress";
-import NFTAbi from "../../abi/NFT.json";
-import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
+import { Contract, providers, utils } from "ethers";
+import {
+  NFT_MARKETPLACE_ADDRESS,
+  NFT_CONTRACT_ABI,
+  NFT_CONTRACT_ADDRESS,
+  NFT_MARKETPLACE_ABI,
+} from "../../constants/index";
 import axios from "axios";
-import { NFTMarketplace, NFT_CONTRACT_ADDRESS, abi } from "../../constants";
-import { useSigner } from "wagmi";
 import Loading from "../Loading";
-
+import {  useSigner, useProvider } from "wagmi";
 import { useRouter } from "next/router";
 
 export default function SellerItems() {
@@ -15,24 +16,36 @@ export default function SellerItems() {
   const [listedNFTs, setListedNFTs] = useState([]);
   const [soldNFTs, setSoldNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
-  //wagmi signer
+  //wagmi signer & provider
+    const provider = useProvider();
+
   const { data: signer, isError, isLoading } = useSigner();
   // Loads all the nfts which are either listed or sold of user.
+   useEffect(() => {
+     loadMyNFTs();
+   }, []);
+
+
   const loadMyNFTs = async () => {
+
     setLoading(true);
  
 
-    const nftContract = new ethers.Contract(nftAddress, NFTAbi.abi, signer);
-    const nftMarketPlaceContract = new ethers.Contract(
-      nftMarketplaceAddress,
-      NFTMarketplaceAbi.abi,
+    const nftContract = new Contract(
+      NFT_CONTRACT_ADDRESS,
+      NFT_CONTRACT_ABI,
+      signer
+    );
+    const nftMarketPlaceContract = new Contract(
+      NFT_MARKETPLACE_ADDRESS,
+      NFT_MARKETPLACE_ABI,
       signer
     );
     const data = await nftMarketPlaceContract.getSellerListedItems();
 
     const allItems = await Promise.all(
       data?.map(async (i) => {
-        let convertedPrice = ethers.utils.formatUnits(
+        let convertedPrice = utils.formatUnits(
           i.price.toString(),
           "ether"
         );
@@ -65,13 +78,6 @@ export default function SellerItems() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    const load = async () => {
-      await loadMyNFTs();
-      console.log(listedNFTs);
-    };
-    load();
-  }, []);
   return (
     <div className="container">
       
@@ -153,7 +159,8 @@ export default function SellerItems() {
                   No Listed NFTs found{" "}
                   <span>
                     <button
-                      text="List Now"
+                          text="List Now"
+                          className="purchase_btn"
                       onClick={() => router.push("/sell")}
                     >
                       sell
@@ -165,7 +172,8 @@ export default function SellerItems() {
           </div>
 
           {/* Sold list */}
-          <div>
+            <div>
+              <hr />
             <header> Sold NFTs </header>
             <div className="grid grid-cols-3">
               {soldNFTs.length && !loading ? (
