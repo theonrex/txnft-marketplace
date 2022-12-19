@@ -138,7 +138,7 @@ export default function ListItem() {
         />
         <input
           id="price"
-          placeholder="e.g.10 (In Ether)"
+          placeholder="e.g.10 (In Polygon)"
           label="Price"
           onChange={(e) => {
             console.log(formData.price);
