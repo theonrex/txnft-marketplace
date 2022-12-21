@@ -1,5 +1,5 @@
-export const NFT_MARKETPLACE_ADDRESS = "0xBeE9CfcA3f3Ce3eFb70F7D24B84fe96e2f61c2C3";
-export const NFT_CONTRACT_ADDRESS = "0xA8907374670831d1470aD8C5eB61c37b6e2f2E3f";
+export const NFT_MARKETPLACE_ADDRESS = "0x8c2b7a1b66C14bc47287372b2Dd55d455F08749d";
+export const NFT_CONTRACT_ADDRESS = "0x7ea9BdFeF45683E69B611376c717AD8319eC0710";
 
 export const NFT_MARKETPLACE_ABI = [
   {
@@ -172,6 +172,19 @@ export const NFT_MARKETPLACE_ABI = [
     type: "event",
   },
   {
+    inputs: [],
+    name: "_paused",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -210,6 +223,86 @@ export const NFT_MARKETPLACE_ABI = [
     name: "cancelListing",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "fetchItemsListed",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "tokenId",
+            type: "uint256",
+          },
+          {
+            internalType: "address payable",
+            name: "seller",
+            type: "address",
+          },
+          {
+            internalType: "address payable",
+            name: "owner",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "price",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "sold",
+            type: "bool",
+          },
+        ],
+        internalType: "struct NFTMarketplace.MarketItem[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "fetchMyNFTs",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "tokenId",
+            type: "uint256",
+          },
+          {
+            internalType: "address payable",
+            name: "seller",
+            type: "address",
+          },
+          {
+            internalType: "address payable",
+            name: "owner",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "price",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "sold",
+            type: "bool",
+          },
+        ],
+        internalType: "struct NFTMarketplace.MarketItem[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

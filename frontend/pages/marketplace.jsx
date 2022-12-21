@@ -181,7 +181,6 @@ const Marketplace = () => {
                   </p>
                 </div> */}
                   <div className="">
-
                     <p className="nft_marketpace_Price">
                       <img
                         src={PolygonImg.src}
@@ -217,15 +216,13 @@ const Marketplace = () => {
               </div>
             ))
           ) : (
-            <div className="text-center font-semibold text-base">
+            <div className=" No_purchase ">
               No purchase found.
               <br />
               Create your nfts with link below
               <br />
               <Link href="/">
-                <button className="purchase-btn">
-                  Click here to buy some
-                </button>
+                <button className="purchase-btn">Click here to buy some</button>
               </Link>
             </div>
           )}

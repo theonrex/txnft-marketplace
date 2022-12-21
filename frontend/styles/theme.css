@@ -177,9 +177,15 @@ color: #0a0f1a;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);    border-radius: 1em;
 }
+.light__mode .nft_info_id header{
+  color: #060107;
+}
 
 /* marketplace */
-.light__mode .marketplace_nft_text{
+.light__mode .marketplace_nft_text,
+.light__mode .No_purchase,
+.light__mode .No_purchase a {
+ 
   color: black;
 }
 .light__mode .nft_marketpace header {
@@ -237,4 +243,22 @@ color: #0a0f1a;
 .light__mode .my_items header {
     padding-top: 1.3em;
     color: #060032;
+}
+
+.light__mode .nft_details_ID{
+  color: black;
+}
+
+.light__mode .nft_details_ID span{
+  color: #3c0082 !important;
+}
+
+.light__mode .No_purchase_History a{
+  color: #5a027e;
+}
+
+/* profile */
+
+.light__mode .mylisteditems{
+  color: black;
 }

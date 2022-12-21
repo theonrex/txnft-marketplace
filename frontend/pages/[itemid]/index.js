@@ -4,7 +4,7 @@ import { nftAddress, nftMarketplaceAddress } from "../../config/networkAddress";
 import NFTAbi from "../../abi/NFT.json";
 import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
 import axios from "axios";
-import { useSigner } from "wagmi";
+import { useSigner, useAccount, useBalance } from "wagmi";
 import { useRouter } from "next/router";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../../components/nft-info/NftInfo";
@@ -35,7 +35,6 @@ export default function Itemid() {
     const data = await nftMarketPlaceContract.getPerticularItem(
       router.query.itemid
     );
-    console.log(data);
 
     const allData = async () => {
       let convertedPrice = ethers.utils.formatUnits(
@@ -53,7 +52,7 @@ export default function Itemid() {
         name: metaData.data.name,
         description: metaData.data.description,
       };
-      console.log(item);
+      // console.log(item);
       setNftData(item);
     };
     allData();
@@ -91,6 +90,14 @@ export default function Itemid() {
     };
     load();
   }, [itemid]);
+  //check account balance
+
+  const { address } = useAccount();
+
+  const { data, refetch } = useBalance({
+    address,
+    watch: true,
+  });
 
   return (
     <div>
@@ -98,15 +105,23 @@ export default function Itemid() {
         <Loading />
       ) : (
         <NftInfo nftData={nftData}>
-          <button
-            text="Buy Now"
-            icon={<AiOutlineArrowRight className="text-2xl" />}
-            className="nft_id_buy_btn"
-            onClick={() => buyNFT(nftData.price.toString(), nftData.tokenId)}
-            disabled={isPurchasing}
-          >
-            But Item
-          </button>
+          {
+            (data < nftData?.price ? (
+              "insufficient amount for this transaction"
+            ) : (
+              <button
+                text="Buy Now"
+                icon={<AiOutlineArrowRight className="text-2xl" />}
+                className="nft_id_buy_btn"
+                onClick={() =>
+                  buyNFT(nftData.price.toString(), nftData.tokenId)
+                }
+                disabled={isPurchasing}
+              >
+                Buy Item
+              </button>
+            ))
+          }
         </NftInfo>
       )}
     </div>

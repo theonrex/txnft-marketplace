@@ -118,8 +118,8 @@ export default function ListItem() {
   };
 
   return (
-    <div className="flex justify-center  container create_item">
-      <div className="create_form">
+    <div className="flex justify-center  container create_item rowx">
+      <section className="create_form col50">
         <form action="">
           <input
             id="name"
@@ -155,16 +155,15 @@ export default function ListItem() {
           type="file"
           onChange={onChange}
         />
-        <div className="nft_uploaded_image">
-          {file ? <img src={file} alt="Choosen image" /> : null}
-        </div>
+
         {!isConnected ? (
           <button
             text="List NFT"
             className="btn_submit_nft"
             onClick={connectWallet}
+            disabled={isListing}
           >
-            create
+            createx
           </button>
         ) : (
           <button
@@ -173,10 +172,13 @@ export default function ListItem() {
             onClick={listAnItem}
             disabled={isListing}
           >
-            create
+            create nft
           </button>
         )}
-      </div>
+      </section>
+      <section className="col50 nft_uploaded_image">
+        {file ? <img src={file} alt="Choosen image" /> : null}
+      </section>{" "}
     </div>
   );
 }

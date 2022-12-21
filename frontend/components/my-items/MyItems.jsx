@@ -5,36 +5,38 @@ import {
   NFT_CONTRACT_ABI,
   NFT_CONTRACT_ADDRESS,
   NFT_MARKETPLACE_ABI,
-} from "../../constants/index";import axios from "axios";
+} from "../../constants/index";
+import axios from "axios";
 import { useSigner } from "wagmi";
 import Link from "next/link";
 import Loading from "../Loading";
 import { useRouter } from "next/router";
+import Web3Modal from "web3modal";
 
 export default function MyItems() {
   const [allNFTs, setAllNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
   // Only loads the NFTs which are purchased by the user.
   const loadMyNFTs = async () => {
     setLoading(true);
- const provider = new providers.JsonRpcProvider(
-   "https://polygon-mumbai.infura.io/v3/4fa55521d0f647f28c1a179e85f454da"
- );
-   const nftContract = new Contract(
-     NFT_CONTRACT_ADDRESS,
-     NFT_CONTRACT_ABI,
-     provider
-   );
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new providers.Web3Provider(connection);
+    const signer = provider.getSigner();
 
-   const contract = new Contract(
-     NFT_MARKETPLACE_ADDRESS,
-     NFT_MARKETPLACE_ABI,
-     provider
-   );
+    const nftContract = new Contract(
+      NFT_CONTRACT_ADDRESS,
+      NFT_CONTRACT_ABI,
+      signer
+    );
+    const nftMarketPlaceContract = new Contract(
+      NFT_MARKETPLACE_ADDRESS,
+      NFT_MARKETPLACE_ABI,
+      signer
+    );
 
-    const data = await contract.getOwnerListedItems();
+    const data = await nftMarketPlaceContract.getOwnerListedItems();
 
     const allItems = await Promise.all(
       data?.map(async (i) => {
@@ -57,9 +59,6 @@ export default function MyItems() {
     console.log(allNFTs);
     setLoading(false);
   };
-
-  //wagmi signer
-  const { data: signer, isError, isLoading } = useSigner();
 
   useEffect(() => {
     const load = async () => {
@@ -100,10 +99,10 @@ export default function MyItems() {
                         nft={nft}
                         className="purchase-btn"
                         url="/my-items/"
-                        onClick={() => buyNFT(nft)}
+                        // onClick={() => buyNFT(nft)}
                       >
                         {" "}
-                        Buy
+                        List
                       </button>
                       <img src={nft.image} alt="img" />
                     </div>
@@ -116,7 +115,7 @@ export default function MyItems() {
                         alt="svgImg"
                         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNDgiIGhlaWdodD0iNDgiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGc+PHBhdGggZD0iTTM5LjQxNjY3LDg2bDUwLjE2NjY3LC03OC44MzMzM2w1MC4xNjY2Nyw3OC44MzMzM2wtNTAuMTY2NjcsMjguNjY2Njd6IiBmaWxsPSIjMzhmZjA2Ij48L3BhdGg+PHBhdGggZD0iTTg5LjU4MzMzLDcuMTY2NjdsNTAuMTY2NjcsNzguODMzMzNsLTUwLjE2NjY3LDI4LjY2NjY3eiIgZmlsbD0iIzQ2Y2MyZSI+PC9wYXRoPjxwYXRoIGQ9Ik0zOS40MTY2Nyw5Ni43NWw1MC4xNjY2NywyOC42NjY2N2w1MC4xNjY2NywtMjguNjY2NjdsLTUwLjE2NjY3LDY4LjA4MzMzeiIgZmlsbD0iIzM4ZmYwNiI+PC9wYXRoPjxwYXRoIGQ9Ik04OS41ODMzMywxMjUuNDE2NjdsNTAuMTY2NjcsLTI4LjY2NjY3bC01MC4xNjY2Nyw2OC4wODMzM3pNMzkuNDE2NjcsODZsNTAuMTY2NjcsLTIxLjVsNTAuMTY2NjcsMjEuNWwtNTAuMTY2NjcsMjguNjY2Njd6IiBmaWxsPSIjNDZjYzJlIj48L3BhdGg+PHBhdGggZD0iTTg5LjU4MzMzLDY0LjVsNTAuMTY2NjcsMjEuNWwtNTAuMTY2NjcsMjguNjY2Njd6IiBmaWxsPSIjMDJmZjJiIj48L3BhdGg+PC9nPjwvZz48L3N2Zz4="
                       />{" "} */}
-                     {nft.price} MATIC
+                      {nft.price} MATIC
                     </div>
                   </div>
                 </div>{" "}
@@ -126,7 +125,7 @@ export default function MyItems() {
             <div className="eth-sale No_purchase_History">
               No purchase History found.
               <br />
-              <Link href="/">Buy Now some</Link>
+              <Link href="/marketplace">Buy Now some</Link>
             </div>
           )}
         </div>

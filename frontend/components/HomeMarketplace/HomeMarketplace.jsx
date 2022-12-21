@@ -141,7 +141,8 @@ function HomeMarketplace() {
           {homePageNft.map((homeNft, _index) => (
             <div
               className="col29 nft-img gradient-box"
-              key={`post-${homeNft.id}`}
+              // key={`post-${homeNft.id}`}
+              key={_index}
               onClick={() => {
                 // buyNFT(nft);
                 // router.push(`/${homeNft.tokenId}`);

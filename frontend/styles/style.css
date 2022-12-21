@@ -15,6 +15,10 @@ button {
   outline: none !important;
 }
 
+.No_purchase_History {
+  color: white;
+}
+
 button {
   outline: none !important;
   box-shadow: none !important;
@@ -32,7 +36,7 @@ button {
 }
 
 .nft_uploaded_image img {
-  width: 60%;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -71,10 +75,16 @@ button {
   width: 50px;
 }
 
-.AccountBalance_nav a {
+.AccountBalance_nav {
   background-color: purple;
   text-align: center;
-  padding: 1em 0;
+  padding: 0.5em 0;
+  color: white;
+}
+
+.AccountBalance {
+  text-align: center;
+  padding: 0.5em 0;
   color: white;
 }
 
@@ -504,7 +514,7 @@ a {
 }
 
 .nft_home_img_width img:hover {
-  padding: 1em;
+  padding: 0.5em;
   width: 300px;
   height: 300px;
 }
@@ -518,7 +528,7 @@ a {
 }
 
 .homenft_img:hover {
-  width: 102%;
+  width: 100%;
 }
 
 .nfthead {
@@ -864,7 +874,8 @@ li {
 .eth-sale {
   display: flex;
   padding-top: 18px;
-  font-size: 0.9em;
+  font-size: 0.6em;
+  font-weight: 600;
   font-weight: normal;
   justify-content: space-between;
 }
@@ -991,6 +1002,33 @@ li {
   color: transparent;
 }
 
+.mylisteditems,
+.sold_nfts,
+.No_Listed_NFTs {
+  color: white;
+}
+
+.mylisteditems header {
+  font-size: 2em;
+  font-weight: 600;
+  text-align: left;
+}
+
+.No_Listed_NFTs {
+  padding-top: 1em;
+  text-align: left;
+}
+
+.sold_nfts header {
+  font-size: 2em;
+  font-weight: 600;
+  text-align: left;
+}
+
+.No_NFTs_sold {
+  text-align: left;
+}
+
 .col30 img {
   width: 100%;
 }
@@ -1100,6 +1138,11 @@ li {
 .socail_media_ul img {
   padding-top: 1em;
   width: 30px;
+}
+
+.No_purchase,
+.No_purchase a {
+  color: white;
 }
 
 .imageBD {
@@ -1499,7 +1542,6 @@ footer .Links {
 }
 
 .create_form {
-  width: 70%;
   margin: auto;
   text-align: left;
 }
@@ -1878,6 +1920,10 @@ input[type=submit] {
   text-align: left;
 }
 
+.nft_details_ID {
+  color: white;
+}
+
 .nft_details_ID h1 {
   font-size: 2em;
   text-transform: capitalize;
@@ -1891,7 +1937,11 @@ input[type=submit] {
 .nft_details_ID h1,
 .nft_details_ID p,
 .nft_details_ID h5 {
-  padding-bottom: 0.6em !important;
+  padding-bottom: 0.4em !important;
+}
+
+.nft_details_ID span {
+  color: #6300ed;
 }
 
 .nft_info_id header {
@@ -1899,6 +1949,7 @@ input[type=submit] {
   font-size: 1.5em;
   text-transform: uppercase;
   font-weight: 600;
+  color: white;
   padding: 0.5em 0;
 }
 
@@ -2215,7 +2266,7 @@ input[type=submit] {
     text-align: center;
   }
   .eth-sale {
-    font-size: 1em;
+    font-size: 0.5em;
   }
 }
 .first-nft br {
@@ -2249,7 +2300,7 @@ input[type=submit] {
     text-align: left;
   }
   .eth-sale {
-    font-size: 0.9em;
+    font-size: 0.54em;
   }
   .col29 {
     width: 45%;

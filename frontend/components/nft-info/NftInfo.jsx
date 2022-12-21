@@ -41,23 +41,23 @@ export default function NftInfo({ nftData, children }) {
 
     const items = await Promise.all(
       data.map(async (i) => {
-        // const tokenUri = await nftContract.tokenURI(i.tokenId);
-        // const meta = await axios.get(tokenUri);
+        const tokenUri = await nftContract.tokenURI(i.tokenId);
+        const meta = await axios.get(tokenUri);
         let price = utils.formatUnits(i.price.toString(), "ether");
         let item = {
           price,
           tokenId: i.tokenId.toNumber(),
           seller: i.seller,
           owner: i.owner,
-          // image: meta.data.image,
-          // name: meta.data.name,
-          // description: meta.data.description,
+          image: meta.data.image,
+          name: meta.data.name,
+          description: meta.data.description,
         };
         return item;
       })
     );
     setNfts(items);
-    console.log(items);
+    // console.log(items);
 
     setLoadingState("loaded");
   }
@@ -88,7 +88,7 @@ export default function NftInfo({ nftData, children }) {
   if (favNfts != undefined) {
     const UsdPrice = usdPrice
       ? ["matic-network"].usd * nfts.price
-      : console.log(favNfts);
+      : console.log(nfts.price);
   }
   return (
     <MainLayout>
@@ -104,10 +104,13 @@ export default function NftInfo({ nftData, children }) {
           </div>
           <div className="col50 nft_details_ID">
             <div className="nft_details_ID">
-              <h1 className="text-6xl ">
-               NFT Name: {nftData?.name}
-              </h1>
-              <p className="text-gray-600">{nftData?.description}</p>
+              <h1 className="text-6xl ">{nftData?.name}</h1>
+              <p className="text-gray-600"></p>
+
+              <p className="text-gray-600">
+                {" "}
+                <span>Description:</span> {nftData?.description}
+              </p>
 
               <h5>
                 <span className="Owned_by">
@@ -125,11 +128,11 @@ export default function NftInfo({ nftData, children }) {
                 <hr />
                 <p className="">Current price</p>{" "}
                 <p className="nft_info_price_id">
-                    <>{nftData?.price.toString()}</> Matic
-                    
+                  <>{nftData?.price.toString()}</> Matic
                   <span>
                     {" "}
-                    ${usdPrice && nftData
+                    $
+                    {usdPrice && nftData
                       ? Number(usdPrice["matic-network"].usd).toFixed(32) *
                         Number(nftData.price).toFixed(32)
                       : null}{" "}

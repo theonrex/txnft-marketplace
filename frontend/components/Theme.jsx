@@ -3,7 +3,7 @@ import { FcNightLandscape, FcLandscape } from "react-icons/fc";
 // import "../../styles/theme.css";
 
 export default function Theme() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const ActiveMode = async () => {
     setDarkMode(!darkMode);
     if (darkMode === true) {

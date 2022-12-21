@@ -17,23 +17,30 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
     /* State Variables */
 
     using Counters for Counters.Counter;
-    Counters.Counter private s_nftIds;
+    Counters.Counter private _tokenIds;
     Counters.Counter private s_nftSold; // To count how many nfts are sold
 
     address payable private ownerAddress;
     uint256 listingPrice = 0.025 ether; // This is the base price every seller has to pay for every listing.
     bool public _paused;
 
- 
-  modifier onlyWhenNotPaused {
+    modifier onlyWhenNotPaused() {
         require(!_paused, "Contract currently paused");
         _;
     }
-       /* Mappings */
+    /* Mappings */
+    mapping(uint256 => MarketItem) private idToMarketItem;
     mapping(uint256 => Item) private Items; // Main Mapping of all Items with tokenId
     mapping(address => mapping(uint256 => Listing)) public listings;
 
     /* Structs */
+    struct MarketItem {
+        uint256 tokenId;
+        address payable seller;
+        address payable owner;
+        uint256 price;
+        bool sold;
+    }
 
     struct Item {
         uint itemId;
@@ -50,9 +57,7 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
     }
     event OwnershipTransferred(address indexed newOwner);
 
- 
     /* Events */
-
 
     address private _owner;
 
@@ -85,9 +90,9 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
     //     uint256 tokenId
     // )
 
-       /* Constructor */
+    /* Constructor */
     constructor() {
-      ownerAddress = payable(msg.sender);
+        ownerAddress = payable(msg.sender);
     }
 
     /* Logics */
@@ -100,11 +105,9 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
      * @dev Transfers ownership of the contract to a new account (`newOwner`).
      * Can only be called by the current owner.
      */
-    function transferContractOwnership(address newOwner)
-        public
-        virtual
-        onlyOwner
-    {
+    function transferContractOwnership(
+        address newOwner
+    ) public virtual onlyOwner {
         require(
             newOwner != address(0),
             "Ownable: new owner is the zero address"
@@ -114,8 +117,8 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
 
     // Get all Listed Items
     function getAllListedItems() external view returns (Item[] memory) {
-        uint itemCount = s_nftIds.current();
-        uint unSoldItemsCount = s_nftIds.current() - s_nftSold.current();
+        uint itemCount = _tokenIds.current();
+        uint unSoldItemsCount = _tokenIds.current() - s_nftSold.current();
         uint currentIndex = 0;
 
         Item[] memory items = new Item[](unSoldItemsCount);
@@ -133,7 +136,7 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
 
     // Get Items of the owner who have purchased the items;
     function getOwnerListedItems() external view returns (Item[] memory) {
-        uint totalListedItems = s_nftIds.current();
+        uint totalListedItems = _tokenIds.current();
         uint itemCount = 0;
         uint currentIndex = 0;
 
@@ -153,12 +156,60 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
             }
         }
 
+        return items;
+    }
+
+    /* Returns only items that a user has purchased */
+    function fetchMyNFTs() public view returns (MarketItem[] memory) {
+        uint totalItemCount = _tokenIds.current();
+        uint itemCount = 0;
+        uint currentIndex = 0;
+
+        for (uint i = 0; i < totalItemCount; i++) {
+            if (idToMarketItem[i + 1].owner == msg.sender) {
+                itemCount += 1;
+            }
+        }
+
+        MarketItem[] memory items = new MarketItem[](itemCount);
+        for (uint i = 0; i < totalItemCount; i++) {
+            if (idToMarketItem[i + 1].owner == msg.sender) {
+                uint currentId = i + 1;
+                MarketItem storage currentItem = idToMarketItem[currentId];
+                items[currentIndex] = currentItem;
+                currentIndex += 1;
+            }
+        }
+        return items;
+    }
+
+        /* Returns only items a user has listed */
+    function fetchItemsListed() public view returns (MarketItem[] memory) {
+        uint totalItemCount = _tokenIds.current();
+        uint itemCount = 0;
+        uint currentIndex = 0;
+
+        for (uint i = 0; i < totalItemCount; i++) {
+            if (idToMarketItem[i + 1].seller == msg.sender) {
+                itemCount += 1;
+            }
+        }
+
+        MarketItem[] memory items = new MarketItem[](itemCount);
+        for (uint i = 0; i < totalItemCount; i++) {
+            if (idToMarketItem[i + 1].seller == msg.sender) {
+                uint currentId = i + 1;
+                MarketItem storage currentItem = idToMarketItem[currentId];
+                items[currentIndex] = currentItem;
+                currentIndex += 1;
+            }
+        }
         return items;
     }
 
     // Get Items of the seller who have listed items;
     function getSellerListedItems() external view returns (Item[] memory) {
-        uint totalListedItems = s_nftIds.current();
+        uint totalListedItems = _tokenIds.current();
         uint itemCount = 0;
         uint currentIndex = 0;
 
@@ -181,11 +232,9 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
         return items;
     }
 
-    function getPerticularItem(uint256 _itemId)
-        external
-        view
-        returns (Item memory)
-    {
+    function getPerticularItem(
+        uint256 _itemId
+    ) external view returns (Item memory) {
         return Items[_itemId];
     }
 
@@ -204,8 +253,8 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
             revert NFTMarketplace__ItemPriceIsLessThenZero();
         }
 
-        s_nftIds.increment();
-        uint newNftId = s_nftIds.current();
+        _tokenIds.increment();
+        uint newNftId = _tokenIds.current();
 
         Items[newNftId] = Item(
             newNftId,
@@ -263,13 +312,11 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
         emit ListingCanceled(_nftAddress, _tokenId, msg.sender);
     }
 
- 
-     // Buy Item
-    function buyItem(address _nftAddress, uint256 _itemId)
-        external
-        payable
-        nonReentrant
-    {
+    // Buy Item
+    function buyItem(
+        address _nftAddress,
+        uint256 _itemId
+    ) external payable nonReentrant {
         uint256 price = Items[_itemId].price;
         uint256 tokenId = Items[_itemId].tokenId;
         address payable seller = Items[_itemId].seller;
@@ -295,7 +342,7 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
         payable(ownerAddress).transfer(listingPrice);
     }
 
-     // Resell
+    // Resell
     function resellItem(
         address _nftAddress,
         uint256 _tokenId,
@@ -314,8 +361,8 @@ contract NFTMarketplace is ReentrancyGuard, Ownable {
         s_nftSold.decrement();
 
         IERC721(_nftAddress).transferFrom(msg.sender, address(this), _tokenId);
-
     }
+
     // /* allows someone to resell a token they have purchased */
     // function resellToken(uint256 tokenId, uint256 price)
     //     public
