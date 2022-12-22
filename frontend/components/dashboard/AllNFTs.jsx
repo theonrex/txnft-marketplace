@@ -49,7 +49,7 @@ export default function AllNFTs() {
     setLoading(false);
   };
 
-  console.log(allNFTs);
+  // console.log(allNFTs);
 
   useEffect(() => {
     const load = () => {
@@ -73,7 +73,6 @@ export default function AllNFTs() {
                   onClick={() => {
                     // buyNFT(nft);
                     router.push(`/${nft.tokenId}`);
-                    console.log("Onclicked on buy button.");
                   }}
                 >
                   x <h2> {nft.price} </h2>

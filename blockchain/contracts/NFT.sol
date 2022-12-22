@@ -16,7 +16,7 @@ contract NFT is ERC721URIStorage {
     Counters.Counter private s_tokenIds; 
     address s_marketplaceAddress;
 
-    constructor(address _marketplaceAddress) ERC721("MyFirstNFT", "nft") {
+    constructor(address _marketplaceAddress) ERC721("TheonX", "THX") {
      s_marketplaceAddress = _marketplaceAddress;
     }
 

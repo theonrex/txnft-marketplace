@@ -75,7 +75,7 @@ export const FavouriteNFTs = () => {
   const favNft = nfts[2];
 
   if (favNft != undefined) {
-    console.log(favNft.price);
+    // console.log(favNft.price);
   }
 
   const buyNFT = async (price, tokenId) => {
@@ -116,7 +116,7 @@ export const FavouriteNFTs = () => {
     axios
       .request(options)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setUsdPrice(response.data);
       })
       .catch((error) => {

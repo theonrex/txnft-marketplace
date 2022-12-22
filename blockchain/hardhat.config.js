@@ -5,6 +5,8 @@ require("solidity-coverage");
 require("hardhat-gas-reporter");
 require("hardhat-contract-sizer");
 require("dotenv").config();
+require("@nomiclabs/hardhat-ethers");
+require("@openzeppelin/hardhat-upgrades");
 
 const API_URL_KEY = process.env.API_URL_KEY;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;

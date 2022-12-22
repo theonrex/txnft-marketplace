@@ -57,7 +57,7 @@ export default function NftInfo({ nftData, children }) {
       })
     );
     setNfts(items);
-    // console.log(items);
+    console.log(items);
 
     setLoadingState("loaded");
   }

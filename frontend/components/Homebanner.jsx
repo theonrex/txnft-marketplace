@@ -73,9 +73,9 @@ function Homebanner() {
   const homeNft = nfts[1];
 
   if (homeNft != undefined) {
-    console.log(homeNft.price);
+    // console.log(homeNft.price);
   }
-  console.log(nfts);
+  // console.log(nfts);
 
   const buyNFT = async (price, tokenId) => {
     setIsPurchasing(true);

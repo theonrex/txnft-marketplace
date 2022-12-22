@@ -76,9 +76,9 @@ function HomeMarketplace() {
   const homePageNft = nfts?.slice(0, 3);
 
   if (homePageNft != undefined) {
-    console.log(homePageNft);
+    // console.log(homePageNft);
   }
-  console.log(nfts?.slice(0, 4));
+  // console.log(nfts?.slice(0, 4));
 
   //    const first7Articles = articles?.slice(0, 7);
 
@@ -146,7 +146,6 @@ function HomeMarketplace() {
               onClick={() => {
                 // buyNFT(nft);
                 // router.push(`/${homeNft.tokenId}`);
-                console.log("Onclicked on buy button.");
               }}
             >
               <div className=" gradient-box epic-img nft_home_img_width">
