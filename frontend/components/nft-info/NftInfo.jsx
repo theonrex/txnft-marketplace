@@ -111,15 +111,21 @@ export default function NftInfo({ nftData, children }) {
                 {" "}
                 <span>Description:</span> {nftData?.description}
               </p>
+              <hr />
 
-              <h5>
+              {/* <h5>
                 <span className="Owned_by">
                   Owned by <br />{" "}
                 </span>{" "}
                 {nftData.owner == "0x0000000000000000000000000000000000000000"
                   ? nftData.seller.toString()
-                  : nftData.owner.toString()}
-              </h5>
+                  : nftData.seller.toString()}
+              </h5> */}
+              {/* <h5>
+                <a href='https://testnets.opensea.io/assets/mumbai/0x7ea9bdfef45683e69b611376c717ad8319ec0710/2'> Opensea Link</a>
+              
+              
+              </h5> */}
               <div className="current_price_id">
                 <div className="nft_tag">
                   <img src="https://img.icons8.com/3d-fluency/94/null/price-tag-usd.png" />{" "}
