@@ -171,10 +171,11 @@ export default function Itemid() {
                   updateFormInput({ ...formInput, price: e.target.value })
                 }
               />
+<br/>
               <button
                 text="Buy Now"
                 icon={<AiOutlineArrowRight className="text-2xl" />}
-                className="nft_id_buy_btn"
+                className="purchase-btn"
                 onClick={() =>
                   resellNFT(nftData.price.toString(), nftData.tokenId)
                 }
