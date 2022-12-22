@@ -180,7 +180,7 @@ export default function Itemid() {
                 }
                 disabled={isPurchasing}
               >
-                But Item
+                List Item
               </button>
             </div>
           )}
