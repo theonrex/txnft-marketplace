@@ -3,8 +3,8 @@ import MainLayout from "../layouts/MainLayout";
 import { useEffect, useState } from "react";
 import {
   NFT_MARKETPLACE_ADDRESS,
-  NFT_CONTRACT_ADDRESS,
   NFT_MARKETPLACE_ABI,
+  NFT_CONTRACT_ADDRESS,
   NFT_CONTRACT_ABI,
 } from "../../constants/index";
 import { nftAddress, nftMarketplaceAddress } from "../../config/networkAddress";
@@ -61,6 +61,13 @@ export default function NftInfo({ nftData, children }) {
 
     setLoadingState("loaded");
   }
+
+
+
+
+  
+
+
 
   //import polygon current pricr from coingecko
 

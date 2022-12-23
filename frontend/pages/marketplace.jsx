@@ -23,7 +23,9 @@ const Marketplace = () => {
 
   const [loadingState, setLoadingState] = useState("not-loaded");
 
-  //wagmi signer
+  //wagmi 
+      const { address } = useAccount();
+
   const { data: signer, isError, isLoading } = useSigner();
 
   useEffect(() => {
@@ -68,6 +70,7 @@ const Marketplace = () => {
         })
       );
       setNfts(items);
+      console.log(items)
       setLoadingState("loaded");
     } catch (error) {
       console.log("something went wrong ", error);
@@ -155,14 +158,7 @@ const Marketplace = () => {
         <div className="rowx ">
           {nfts.length && loadingState ? (
             nfts?.map((nft, i) => (
-              <div
-                key={i}
-                className="col29 nft-img gradient-box"
-                onClick={() => {
-                  // buyNFT(nft);
-                  router.push(`/${nft.tokenId}`);
-                }}
-              >
+              <div key={i} className="col29 nft-img gradient-box">
                 <div className=" gradient-box epic-img nft_home_img_width">
                   <div className="">
                     {nft.image ? <img src={nft.image} /> : "null"}
@@ -199,17 +195,26 @@ const Marketplace = () => {
                         USD{" "}
                       </span>
                     </p>
-                    {nft?.owner != nft.seller ? (
+                    {address != nft?.seller ? (
                       <button
                         className="marketplace_btn_buy"
-                        // onClick={() =>
-                        //   buyNFT(nft?.price.toString(), nft.tokenId)
-                        // }
+                        onClick={() => {
+                          // buyNFT(nft);
+                          router.push(`/${nft.tokenId}`);
+                        }}
                       >
                         Buy
                       </button>
                     ) : (
-                      "dd"
+                      <button
+                        className="marketplace_btn_buy"
+                        onClick={() => {
+                          // buyNFT(nft);
+                          router.push(`/my-items/${nft.tokenId}`);
+                        }}
+                      >
+                        View
+                      </button>
                     )}
                   </div>
                 </div>

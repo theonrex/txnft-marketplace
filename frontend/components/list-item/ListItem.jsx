@@ -4,9 +4,13 @@ import { create } from "ipfs-http-client";
 
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useRouter } from "next/router";
-import { nftAddress, nftMarketplaceAddress } from "../../config/networkAddress";
-import NFTAbi from "../../abi/NFT.json";
-import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
+
+import {
+  NFT_MARKETPLACE_ADDRESS,
+  NFT_CONTRACT_ADDRESS,
+  NFT_MARKETPLACE_ABI,
+  NFT_CONTRACT_ABI,
+} from "../../constants/index";
 import { useAccount, useConnect, useSigner } from "wagmi";
 import Image from "next/image";
 
@@ -68,7 +72,11 @@ export default function ListItem() {
   const createItem = async (url) => {
     setisListing(true);
 
-    const nftContract = new ethers.Contract(nftAddress, NFTAbi.abi, signer);
+    const nftContract = new ethers.Contract(
+      NFT_CONTRACT_ADDRESS,
+      NFT_CONTRACT_ABI,
+      signer
+    );
 
     let transaction = await nftContract.mintToken(url);
     let tx = await transaction.wait();
@@ -79,15 +87,15 @@ export default function ListItem() {
 
     let convertedPrice = ethers.utils.parseUnits(formData.price, "ether");
     const nftMarketPlaceContract = new ethers.Contract(
-      nftMarketplaceAddress,
-      NFTMarketplaceAbi.abi,
+      NFT_MARKETPLACE_ADDRESS,
+      NFT_MARKETPLACE_ABI,
       signer
     );
 
     let listingPrice = await nftMarketPlaceContract.getListingPrice();
     listingPrice = await listingPrice.toString();
     let listingTx = await nftMarketPlaceContract.listItem(
-      nftAddress,
+      NFT_CONTRACT_ADDRESS,
       tokenId,
       convertedPrice,
       { value: listingPrice }
@@ -151,7 +159,7 @@ export default function ListItem() {
           id="file"
           accept=".jpg,.png"
           placeholder="Choose image file"
-          label="NFT Image"
+          label="3 Image"
           type="file"
           onChange={onChange}
         />
@@ -163,7 +171,7 @@ export default function ListItem() {
             onClick={connectWallet}
             disabled={isListing}
           >
-            createx
+            Connect Wallet
           </button>
         ) : (
           <button

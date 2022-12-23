@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { nftAddress, nftMarketplaceAddress } from "../../config/networkAddress";
-import NFTAbi from "../../abi/NFT.json";
-import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
 import axios from "axios";
 import { useSigner, useAccount, useBalance } from "wagmi";
 import { useRouter } from "next/router";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../../components/nft-info/NftInfo";
 import Loading from "../../components/Loading";
+import {
+  NFT_MARKETPLACE_ADDRESS,
+  NFT_CONTRACT_ADDRESS,
+  NFT_MARKETPLACE_ABI,
+  NFT_CONTRACT_ABI,
+} from "../../constants/index";
 
 export default function Itemid() {
   const router = useRouter();
@@ -26,10 +29,14 @@ export default function Itemid() {
     const provider = new ethers.providers.JsonRpcProvider(
       "https://polygon-mumbai.infura.io/v3/4fa55521d0f647f28c1a179e85f454da"
     );
-    const nftContract = new ethers.Contract(nftAddress, NFTAbi.abi, provider);
+    const nftContract = new ethers.Contract(
+      NFT_CONTRACT_ADDRESS,
+      NFT_CONTRACT_ABI,
+      provider
+    );
     const nftMarketPlaceContract = new ethers.Contract(
-      nftMarketplaceAddress,
-      NFTMarketplaceAbi.abi,
+      NFT_MARKETPLACE_ADDRESS,
+      NFT_MARKETPLACE_ABI,
       provider
     );
     const data = await nftMarketPlaceContract.getPerticularItem(
@@ -48,8 +55,8 @@ export default function Itemid() {
         tokenId: data.tokenId.toNumber(),
         seller: data.seller,
         owner: data.owner,
-        image: metaData.data.image,
-        name: metaData.data.name,
+        image: metaData?.data?.image,
+        name: metaData.data?.name,
         description: metaData.data.description,
       };
       // console.log(item);
@@ -64,15 +71,15 @@ export default function Itemid() {
     setIsPurchasing(true);
 
     const nftMarketPlaceContract = new ethers.Contract(
-      nftMarketplaceAddress,
-      NFTMarketplaceAbi.abi,
+      NFT_MARKETPLACE_ADDRESS,
+      NFT_MARKETPLACE_ABI,
       signer
     );
 
     let convertedPrice = ethers.utils.parseUnits(price.toString(), "ether");
 
     const transaction = await nftMarketPlaceContract.buyItem(
-      nftAddress,
+      NFT_CONTRACT_ADDRESS,
       tokenId,
       {
         value: convertedPrice,
@@ -99,29 +106,53 @@ export default function Itemid() {
     watch: true,
   });
 
+    async function buyNFTs(nft) {
+    
+
+      //sign the transaction
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        NFT_MARKETPLACE_ADDRESS,
+          NFT_MARKETPLACE_ABI,
+        signer
+      );
+
+      //set the price
+      const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
+
+      //make the sale
+      const transaction = await contract.createMarketSale(
+        nftaddress,
+        nft.tokenId,
+        {
+          value: price,
+        }
+      );
+      await transaction.wait();
+
+      loadNFTs();
+    }
+
   return (
     <div>
+   
       {!nftData && loading ? (
         <Loading />
       ) : (
         <NftInfo nftData={nftData}>
-          {
-            (data < nftData?.price ? (
-              "insufficient amount for this transaction"
-            ) : (
-              <button
-                text="Buy Now"
-                icon={<AiOutlineArrowRight className="text-2xl" />}
-                className="nft_id_buy_btn"
-                onClick={() =>
-                  buyNFT(nftData.price.toString(), nftData.tokenId)
-                }
-                disabled={isPurchasing}
-              >
-                Buy Item
-              </button>
-            ))
-          }
+          {data < nftData?.price ? (
+            "insufficient amount for this transaction"
+          ) : (
+            <button
+              text="Buy Now"
+              icon={<AiOutlineArrowRight className="text-2xl" />}
+              className="nft_id_buy_btn"
+              onClick={() => buyNFT(nftData.price.toString(), nftData.tokenId)}
+              disabled={isPurchasing}
+            >
+              Buy Item
+            </button>
+          )}
         </NftInfo>
       )}
     </div>

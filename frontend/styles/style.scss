@@ -93,10 +93,12 @@ display: flex;
   padding: 0.5em 0;
   color: white;
 }
-.AccountBalance_nav a {
+.AccountBalance_nav a,
+.low_polygon {
   text-decoration: underline;
   text-transform: capitalize;
   line-height: 1em;
+  font-size: 0.9em;
 }
 .AccountBalance_nav a:hover {
   color: #ffffff;
@@ -1082,7 +1084,9 @@ li {
   padding-top: 1em;
   text-align: left;
 }
-
+.sold_nfts{
+  display: table;
+}
 .sold_nfts header{
  font-size: 2em;
   font-weight: 600;
@@ -1152,6 +1156,7 @@ li {
 
 /*footer*/
 footer {
+  position: relative;
   width: 100%;
   margin-top: 3em;
   padding-top: 5em;
@@ -2447,7 +2452,7 @@ display: flex;
   //   font-size: 0.7em;
   // }
   .col29 {
-    width: 45%;
+    width: 100%;
   }
   .my_nft_box {
     display: flex;
