@@ -102,7 +102,7 @@ export default function ListItem() {
     );
     await listingTx.wait();
 
-    router.push("/");
+    router.push("/marketplace");
     setisListing(false);
   };
 

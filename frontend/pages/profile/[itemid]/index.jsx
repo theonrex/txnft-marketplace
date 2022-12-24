@@ -136,31 +136,18 @@ export default function Itemid() {
             className="purchase-btn"
             onClick={() => setIsReselling(!isReselling)}
           >
-            {isReselling ? "Cancel" : "Re-sell NFT"}
+            {isReselling ? "Cancel" : "View on opensea"}
           </button>
           {isReselling && (
             <div>
-              <input
-                id="resellprice"
-                placeholder="e.g.10 (In Polygon)"
-                label="Resell Price"
-                onChange={(e) => {
-                  console.log(formData.price);
-                  setFormData({ ...formData, price: e.target.value });
-                  console.log(formData);
-                }}
-              />
               <br />
-              <button
-                text="Buy Now"
-                icon={<AiOutlineArrowRight className="text-2xl" />}
-                className="purchase-btn"
-                onClick={() =>
-                  resellNFT(nftData.price.toString(), nftData.tokenId)
-                }
-                disabled={isPurchasing}
-              >
-                List Item
+              <button text="Buy Now" className="purchase-btn">
+                  <a
+                    target='_blank'
+                  href={`https://testnets.opensea.io/assets/mumbai/0x616be2fe92bd1383310a6e2df38e06871fec3ed1/${nftData.tokenId}`}
+                  >
+                    View 
+                </a>
               </button>
             </div>
           )}

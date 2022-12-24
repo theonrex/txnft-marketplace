@@ -10,25 +10,38 @@ import axios from "axios";
 import Loading from "../Loading";
 import { useSigner, useProvider } from "wagmi";
 import { useRouter } from "next/router";
-import Web3Modal from "web3modal";
-
+import { useAccount, useBalance } from "wagmi";
 export default function SellerItems() {
   const router = useRouter();
   const [allNFTs, setAllNFTs] = useState([]);
   const [listedNFTs, setListedNFTs] = useState([]);
   const [soldNFTs, setSoldNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
-    const [allNFTxs, setAllNFTxs] = useState([]);
+  const [allNFTxs, setAllNFTxs] = useState([]);
 
   //wagmi signer & provider
+  const { data: signer } = useSigner({
+    onError(error) {
+      console.log("Error", error);
+    },
+  });
+  // const signer = useSigner();
+
   const provider = useProvider();
+
+  // const provider = useProvider();
+
+  useEffect(() => {
+    if (!signer) return;
+    loadMyNFTsx();
+  }, [signer]);
   // Only loads the NFTs which are purchased by the user.
   const loadMyNFTsx = async () => {
     setLoading(true);
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new providers.Web3Provider(connection);
-    const signer = provider.getSigner();
+    // const web3Modal = new Web3Modal();
+    // const connection = await web3Modal.connect();
+    // const provider = new providers.Web3Provider(connection);
+    // const signer = provider.useSigner();
 
     const nftContract = new Contract(
       NFT_CONTRACT_ADDRESS,
@@ -66,26 +79,17 @@ export default function SellerItems() {
   };
 
   useEffect(() => {
-    const load = async () => {
-      await loadMyNFTsx();
-      console.log(allNFTxs);
-    };
-    load();
-  }, []);
-  const { data: signer, isError, isLoading } = useSigner();
-
+    if (!signer) return;
+    loadMyNFTs();
+  }, [signer]);
   // Loads all the nfts which are either listed or sold of user.
   const loadMyNFTs = async () => {
     setLoading(true);
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new providers.Web3Provider(connection);
-    const signer = provider.getSigner();
 
     const nftContract = new Contract(
       NFT_CONTRACT_ADDRESS,
       NFT_CONTRACT_ABI,
-      provider
+      signer
     );
     const nftMarketPlaceContract = new Contract(
       NFT_MARKETPLACE_ADDRESS,
@@ -127,13 +131,16 @@ export default function SellerItems() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    const load = async () => {
-      await loadMyNFTs();
-      console.log(listedNFTs);
-    };
-    load();
-  }, []);
+  //load address
+  const { address } = useAccount();
+
+  // useEffect(() => {
+  //   const load = async () => {
+  //     await loadMyNFTs();
+  //     console.log(listedNFTs);
+  //   };
+  //   load();
+  // }, []);
   return (
     <div className="container">
       {!listedNFTs.length && loading ? (
@@ -150,7 +157,7 @@ export default function SellerItems() {
                       key={`post-${nft.id}`}
                       onClick={() => {
                         // buyNFT(nft);
-                        router.push(`/profile/${nft.tokenId}`);
+                        router.push(`/profile/${nft.tokenId}/${nft?.seller}`);
                         console.log("Onclicked on buy button.");
                       }}
                     >
@@ -164,17 +171,7 @@ export default function SellerItems() {
                       {/* button */}
                       <div className="epic-box">
                         <div className="epic">
-                          <button
-                            nft={nft}
-                            className="purchase_btn"
-                            url="/my-listed-items/"
-                            onClick={() => {
-                              buyNFT(nft);
-                              console.log("Onclicked on buy button.");
-                            }}
-                          >
-                            Buy Nft
-                          </button>
+                        
                           <img src={nft.image} alt="img" />
                         </div>
                         <div>{/* <p className="rating"> 18/90</p> */}</div>
@@ -256,11 +253,7 @@ export default function SellerItems() {
                             <button
                               nft={nft}
                               className="purchase_btn"
-                              url="/my-listed-items/"
-                              onClick={() => {
-                                buyNFT(nft);
-                                console.log("Onclicked on buy button.");
-                              }}
+                              url="/my-items/"
                             >
                               Buy Nft
                             </button>

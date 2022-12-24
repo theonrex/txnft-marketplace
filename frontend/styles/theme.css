@@ -248,7 +248,9 @@ color: #0a0f1a;
 .light__mode .nft_details_ID{
   color: black;
 }
-
+.light__mode .mylisteditems, .sold_nfts, .No_Listed_NFTs {
+    color: rgb(2, 1, 1);
+}
 .light__mode .nft_details_ID span{
   color: #3c0082 !important;
 }
