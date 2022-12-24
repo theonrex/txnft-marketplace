@@ -9,7 +9,6 @@ import {
 import axios from "axios";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
-import Web3Modal from "web3modal";
 import Backgroundimg from "../public/assets/cta-shape-right.png";
 import Backgroundimageleft from "../public/assets/cta-2-left.png";
 import { useAccount, useConnect, useSigner, useProvider } from "wagmi";

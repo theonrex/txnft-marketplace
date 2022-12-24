@@ -142,11 +142,12 @@ export default function Itemid() {
             <div>
               <br />
               <button text="Buy Now" className="purchase-btn">
-                  <a
-                    target='_blank'
+                <a
+                  target="_blank"
+                  rel="noreferrer"
                   href={`https://testnets.opensea.io/assets/mumbai/0x616be2fe92bd1383310a6e2df38e06871fec3ed1/${nftData.tokenId}`}
-                  >
-                    View 
+                >
+                  View
                 </a>
               </button>
             </div>

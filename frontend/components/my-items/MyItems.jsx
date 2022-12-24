@@ -7,17 +7,32 @@ import {
   NFT_MARKETPLACE_ABI,
 } from "../../constants/index";
 import axios from "axios";
-import { useSigner } from "wagmi";
 import Link from "next/link";
 import Loading from "../Loading";
 import { useRouter } from "next/router";
-import Web3Modal from "web3modal";
+import { useSigner, useProvider } from "wagmi";
 
 export default function MyItems() {
   const [allNFTs, setAllNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  //wagmi signer & provider
+  const { data: signer } = useSigner({
+    onError(error) {
+      console.log("Error", error);
+    },
+  });
+  // const signer = useSigner();
+
+  const provider = useProvider();
+
   // Only loads the NFTs which are purchased by the user.
+
+    useEffect(() => {
+      if (!signer) return;
+      loadMyNFTs();
+    }, [signer]);
   const loadMyNFTs = async () => {
     setLoading(true);
     const web3Modal = new Web3Modal();
@@ -60,13 +75,6 @@ export default function MyItems() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    const load = async () => {
-      await loadMyNFTs();
-      console.log(allNFTs);
-    };
-    load();
-  }, []);
   return (
     <div>
       {!allNFTs.length && loading ? (
