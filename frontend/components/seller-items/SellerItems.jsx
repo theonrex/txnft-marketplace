@@ -157,7 +157,7 @@ export default function SellerItems() {
                       key={`post-${nft.id}`}
                       onClick={() => {
                         // buyNFT(nft);
-                        router.push(`/profile/${nft.tokenId}/${nft?.seller}`);
+                        router.push(`/profile/${nft.tokenId}`);
                         console.log("Onclicked on buy button.");
                       }}
                     >
