@@ -22,14 +22,13 @@ function Homebanner() {
   //wagmi signer
   const { data: signer, isError } = useSigner();
   const { connector: activeConnector, isConnected } = useAccount();
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect();
 
   const provider = useProvider();
 
-  useEffect(() => {
-    loadNFTs();
-  }, []);
+ useEffect(() => {
+   if (!signer) return;
+   loadNFTs();
+ }, [signer]);
 
   async function loadNFTs() {
     const nftContract = new Contract(
@@ -61,15 +60,16 @@ function Homebanner() {
         })
       );
       setNfts(items);
+      console.log(items);
       setLoadingState("loaded");
     } catch (error) {
       console.log("Something went wrong", error);
     }
   }
 
-  
+  console.log(nfts);
 
-  const homeNft = nfts[1];
+  const homeNft = nfts[2];
 
   if (homeNft != undefined) {
     // console.log(homeNft.price);
