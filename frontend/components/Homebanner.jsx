@@ -69,7 +69,7 @@ function Homebanner() {
 
   
 
-  const homeNft = nfts[1];
+  const homeNft = nfts[1 || 3 || 4];
 
   if (homeNft != undefined) {
     // console.log(homeNft.price);
