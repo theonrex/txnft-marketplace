@@ -32,6 +32,12 @@ function Homebanner() {
   }, []);
 
   async function loadNFTs() {
+
+const provider = new providers.JsonRpcProvider(
+      "https://polygon-mumbai.infura.io/v3/4fa55521d0f647f28c1a179e85f454da"
+    );
+
+
     const nftContract = new Contract(
       NFT_CONTRACT_ADDRESS,
       NFT_CONTRACT_ABI,
