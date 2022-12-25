@@ -23,56 +23,57 @@ function Homebanner() {
   const { data: signer, isError } = useSigner();
   const { connector: activeConnector, isConnected } = useAccount();
 
-  const provider = useProvider();
+  // const provider = useProvider();
 
- useEffect(() => {
-   if (!signer) return;
-   loadNFTs();
- }, [signer]);
-
+  useEffect(() => {
+    loadNFTs();
+  }, []);
   async function loadNFTs() {
+    /* create a generic provider and query for unsold market items */
+    const provider = new providers.JsonRpcProvider(
+      "https://polygon-mumbai.infura.io/v3/4fa55521d0f647f28c1a179e85f454da"
+    );
+
     const nftContract = new Contract(
       NFT_CONTRACT_ADDRESS,
       NFT_CONTRACT_ABI,
       provider
     );
-    const marketplaceContract = new ethers.Contract(
+
+    const contract = new Contract(
       NFT_MARKETPLACE_ADDRESS,
       NFT_MARKETPLACE_ABI,
-      signer
+      provider
     );
-    try {
-      const data = await marketplaceContract.getAllListedItems();
-      const items = await Promise.all(
-        data.map(async (i) => {
-          const tokenURI = await nftContract.tokenURI(i.tokenId);
-          const meta = await axios.get(tokenURI);
-          let price = ethers.utils.formatUnits(i.price.toString(), "ether");
-          let item = {
-            price,
-            tokenId: i.tokenId.toNumber(),
-            seller: i.seller,
-            owner: i.owner,
-            image: meta.data.image,
-            tokenURI,
-          };
-          return item;
-        })
-      );
-      setNfts(items);
-      console.log(items);
-      setLoadingState("loaded");
-    } catch (error) {
-      console.log("Something went wrong", error);
-    }
+    const data = await contract.getAllListedItems();
+
+    const items = await Promise.all(
+      data.map(async (i) => {
+        const tokenUri = await nftContract.tokenURI(i.tokenId);
+        const meta = await axios.get(tokenUri);
+        let price = utils.formatUnits(i.price.toString(), "ether");
+        let item = {
+          price,
+          tokenId: i.tokenId.toNumber(),
+          seller: i.seller,
+          owner: i.owner,
+          image: meta.data.image,
+          name: meta.data.name,
+          description: meta.data.description,
+        };
+        return item;
+      })
+    );
+    setNfts(items);
+    setLoadingState("loaded");
   }
 
   console.log(nfts);
 
-  const homeNft = nfts[2];
+  const homeNft = nfts[1 || 3 || 5];
 
   if (homeNft != undefined) {
-    // console.log(homeNft.price);
+    console.log(homeNft);
   }
   // console.log(nfts);
 

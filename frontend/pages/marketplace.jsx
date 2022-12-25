@@ -210,7 +210,7 @@ const Marketplace = () => {
                         className="marketplace_btn_buy"
                         onClick={() => {
                           // buyNFT(nft);
-                          router.push(`/my-items/${nft.tokenId}`);
+                          router.push(`profile/${nft.tokenId} `);
                         }}
                       >
                         View

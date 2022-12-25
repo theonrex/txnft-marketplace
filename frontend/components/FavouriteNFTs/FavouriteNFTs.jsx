@@ -72,7 +72,7 @@ export const FavouriteNFTs = () => {
     setNfts(items);
     setLoadingState("loaded");
   }
-  const favNft = nfts[2];
+  const favNft = nfts[2 || 5];
 
   if (favNft != undefined) {
     // console.log(favNft.price);
