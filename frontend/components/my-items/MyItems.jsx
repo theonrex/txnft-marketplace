@@ -35,10 +35,7 @@ export default function MyItems() {
     }, [signer]);
   const loadMyNFTs = async () => {
     setLoading(true);
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new providers.Web3Provider(connection);
-    const signer = provider.getSigner();
+  
 
     const nftContract = new Contract(
       NFT_CONTRACT_ADDRESS,
