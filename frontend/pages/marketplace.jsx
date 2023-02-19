@@ -59,6 +59,7 @@ const Marketplace = () => {
           let price = utils.formatUnits(i.price.toString(), "ether");
           let item = {
             price,
+            itemId: i.itemId.toString(),
             tokenId: i.tokenId.toNumber(),
             seller: i.seller,
             owner: i.owner,
@@ -76,6 +77,8 @@ const Marketplace = () => {
       console.log("something went wrong ", error);
     }
   }
+        console.log(nfts);
+
 
   const buyNFT = async (price, tokenId) => {
     setIsPurchasing(true);
@@ -149,12 +152,13 @@ const Marketplace = () => {
     loadNFTs();
   }
 
+
   return (
     <div>
       {" "}
       <div className="nft_marketpace container">
         <header>Market Place</header>
-
+    
         <div className="rowx ">
           {nfts.length && loadingState ? (
             nfts?.map((nft, i) => (
@@ -200,7 +204,7 @@ const Marketplace = () => {
                         className="marketplace_btn_buy"
                         onClick={() => {
                           // buyNFT(nft);
-                          router.push(`/${nft.tokenId}`);
+                          router.push(`/${nft.itemId}`);
                         }}
                       >
                         Buy
@@ -210,7 +214,7 @@ const Marketplace = () => {
                         className="marketplace_btn_buy"
                         onClick={() => {
                           // buyNFT(nft);
-                          router.push(`profile/${nft.tokenId} `);
+                          router.push(`profile/${nft.itemId} `);
                         }}
                       >
                         View

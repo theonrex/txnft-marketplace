@@ -35,10 +35,7 @@ export default function MyItems() {
     }, [signer]);
   const loadMyNFTs = async () => {
     setLoading(true);
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new providers.Web3Provider(connection);
-    const signer = provider.getSigner();
+
 
     const nftContract = new Contract(
       NFT_CONTRACT_ADDRESS,
@@ -60,6 +57,7 @@ export default function MyItems() {
         const metaData = await axios.get(tokenUri);
         let item = {
           price: convertedPrice,
+          itemId: i.itemId.toString(),
           tokenId: i.tokenId.toNumber(),
           seller: i.seller,
           owner: i.owner,
@@ -89,7 +87,7 @@ export default function MyItems() {
                   key={`post-${nft.id}`}
                   onClick={() => {
                     // buyNFT(nft);
-                    router.push(`/my-items/${nft.tokenId}`);
+                    router.push(`/my-items/${nft.itemId}`);
                     console.log("Onclicked on buy button.");
                   }}
                 >

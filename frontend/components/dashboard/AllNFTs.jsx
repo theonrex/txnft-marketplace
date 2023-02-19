@@ -35,6 +35,7 @@ export default function AllNFTs() {
         const metaData = await axios.get(tokenUri);
         let item = {
           price: convertedPrice,
+          itemId: i.itemId.toString(),
           tokenId: i.tokenId.toNumber(),
           seller: i.seller,
           owner: i.owner,
@@ -72,7 +73,7 @@ export default function AllNFTs() {
                   url=""
                   onClick={() => {
                     // buyNFT(nft);
-                    router.push(`/${nft.tokenId}`);
+                    router.push(`/${nft.itemId}`);
                   }}
                 >
                   x <h2> {nft.price} </h2>

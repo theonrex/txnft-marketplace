@@ -15,7 +15,7 @@ import {
 
 export default function Itemid() {
   const router = useRouter();
-  let { itemid } = router.query;
+  let { itemId } = router.query;
 
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState();
@@ -40,7 +40,7 @@ export default function Itemid() {
       provider
     );
     const data = await nftMarketPlaceContract.getPerticularItem(
-      router.query.itemid
+      router.query.itemId
     );
 
     const allData = async () => {
@@ -93,10 +93,10 @@ export default function Itemid() {
 
   useEffect(() => {
     const load = async () => {
-      if (router.query.itemid) await loadNFT();
+      if (router.query.itemId) await loadNFT();
     };
     load();
-  }, [itemid]);
+  }, [itemId]);
   //check account balance
 
   const { address } = useAccount();

@@ -115,7 +115,9 @@ function Homebanner() {
     }
   };
 
- 
+
+
+
 
   return (
     <div className="  first-section" id="Home" data-aos="fade-right">
@@ -140,7 +142,6 @@ function Homebanner() {
             <button className="buy-btn ">
               <a href="/marketplace"> Explore More</a>
             </button>
-          
           </div>
           <div className="first-counter">
             <h2 className="works">
@@ -177,26 +178,35 @@ function Homebanner() {
               <p>{homeNft?.price} MATIC</p>
             </div>
             <div className="bid-btn">
-                  {!isConnected ? (
-                    <button className="purchase-btn" onClick={connectWallet}>
-                      Purchase
-                    </button>
-                  ) : (
-                    <button
-                      className="purchase-btn"
-                      onClick={() =>
-                        buyNFT(homeNft?.price.toString(), homeNft.tokenId)
-                      }
-                    >
-                      {" "}
-                      Purchase
-                    </button>
-                  )}
-                  <button className="bids-btn" onClick={placeBid}>
+              <button className="purchase-btn">
+                {!isConnected ? (
+              
+                  <a href="/#" onClick={connectWallet}>
                     {" "}
-                    <a href="/#"> Place a bid</a>
-                  </button>
-                </div>
+                    Purchase
+                  </a>
+                ) : (
+                  <a
+                    href="/#"
+                     onClick={() =>
+                      buyNFT(homeNft?.price.toString(), homeNft.tokenId)
+                    }
+                  >
+                    {" "}
+                    Purchase
+                  </a>
+
+               
+                )}
+              </button>
+
+              <div>
+                <button className="bids-btn" onClick={placeBid}>
+                  {" "}
+                  <a href="/#"> Place a bid</a>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

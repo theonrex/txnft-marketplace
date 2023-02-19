@@ -107,6 +107,7 @@ export default function SellerItems() {
         let item = {
           price: convertedPrice,
           sold: i.sold,
+          itemId: i.itemId.toString(),
           tokenId: i.tokenId.toNumber(),
           seller: i.seller,
           owner: i.owner,
@@ -157,8 +158,7 @@ export default function SellerItems() {
                       key={`post-${nft.id}`}
                       onClick={() => {
                         // buyNFT(nft);
-                        router.push(`/profile/${nft.tokenId}`);
-                        console.log("Onclicked on buy button.");
+                        router.push(`/profile/${nft.itemId}`);
                       }}
                     >
                       <div className=" gradient-box epic-img nft_home_img_width">
@@ -236,8 +236,7 @@ export default function SellerItems() {
                         key={`post-${nft.id}`}
                         onClick={() => {
                           // buyNFT(nft);
-                          router.push(`/my-items/${nft.tokenId}`);
-                          console.log("Onclicked on buy button.");
+                          router.push(`/my-items/${nft.itemId}`);
                         }}
                       >
                         <div className=" gradient-box epic-img nft_home_img_width">
