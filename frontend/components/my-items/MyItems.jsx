@@ -35,7 +35,7 @@ export default function MyItems() {
     }, [signer]);
   const loadMyNFTs = async () => {
     setLoading(true);
-
+  
 
     const nftContract = new Contract(
       NFT_CONTRACT_ADDRESS,
