@@ -31,7 +31,7 @@ function Homebanner() {
   async function loadNFTs() {
     /* create a generic provider and query for unsold market items */
     const provider = new providers.JsonRpcProvider(
-      "https://polygon-mumbai.infura.io/v3/4fa55521d0f647f28c1a179e85f454da"
+      process.env.NEXT_PUBLIC_INFURA
     );
 
     const nftContract = new Contract(

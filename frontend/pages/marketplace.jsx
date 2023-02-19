@@ -15,6 +15,7 @@ import { Address } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
 import { useSigner } from "wagmi";
 
+const infuraId = process.env.NEXT_PUBLIC_INFURA;
 
 const Marketplace = () => {
   const router = useRouter();
@@ -34,9 +35,8 @@ const Marketplace = () => {
 
   async function loadNFTs() {
     /* create a generic provider and query for unsold market items */
-    const provider = new providers.JsonRpcProvider(
-      "https://polygon-mumbai.infura.io/v3/4fa55521d0f647f28c1a179e85f454da"
-    );
+    const provider = new providers.JsonRpcProvider(`${infuraId}`);
+
 
     const nftContract = new Contract(
       NFT_CONTRACT_ADDRESS,

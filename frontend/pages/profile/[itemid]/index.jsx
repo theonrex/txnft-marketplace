@@ -32,7 +32,7 @@ export default function Itemid() {
     setLoading(true);
     setIsPurchasing(true);
     const provider = new ethers.providers.JsonRpcProvider(
-      "https://polygon-mumbai.infura.io/v3/4fa55521d0f647f28c1a179e85f454da"
+      process.env.NEXT_PUBLIC_INFURA
     );
     const nftContract = new ethers.Contract(
       NFT_CONTRACT_ADDRESS,
