@@ -310,6 +310,7 @@ a {
 .col29 {
   float: left;
   padding: 10px;
+  width: 30.8%;
 }
 
 .col30 {
@@ -821,7 +822,13 @@ li {
 
 .nft-img {
   padding: 1em;
-  margin: 22px 13px;
+  margin: 22px 12px;
+}
+
+.nft_marketpace .rowx {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 .nft-img h3 {
@@ -2081,6 +2088,18 @@ input[type=submit] {
     font-size: 1.5em;
   }
 }
+@media screen and (max-width: 1199px) {
+  .col25,
+.col20,
+.col30,
+.col40,
+.col29,
+.col50,
+.col60,
+.col23 {
+    width: 40%;
+  }
+}
 @media screen and (max-width: 1000px) {
   .col25,
 .col20,
@@ -2300,9 +2319,6 @@ input[type=submit] {
   .eth-sale {
     font-size: 0.54em;
   }
-  .col29 {
-    width: 100%;
-  }
   .my_nft_box {
     display: flex;
     width: 100%;
@@ -2313,7 +2329,7 @@ input[type=submit] {
     align-items: flex-end;
   }
 }
-@media screen and (max-width: 698px) {
+@media screen and (max-width: 767px) {
   .col25,
 .col20,
 .col29,
