@@ -15,20 +15,19 @@ import {
 
 export default function Itemid() {
   const router = useRouter();
-  let { itemId } = router.query;
+  let { itemid } = router.query;
 
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState();
   const [isPurchasing, setIsPurchasing] = useState(false);
+  const ankrTestnet = "https://rpc.ankr.com/fantom_testnet";
 
   //wagmi signer
   const { data: signer, isError, isLoading } = useSigner();
   const loadNFT = async () => {
     setLoading(true);
     setIsPurchasing(true);
-    const provider = new ethers.providers.JsonRpcProvider(
-      process.env.NEXT_PUBLIC_INFURA
-    );
+    const provider = new ethers.providers.JsonRpcProvider(ankrTestnet);
     const nftContract = new ethers.Contract(
       NFT_CONTRACT_ADDRESS,
       NFT_CONTRACT_ABI,
@@ -40,7 +39,7 @@ export default function Itemid() {
       provider
     );
     const data = await nftMarketPlaceContract.getPerticularItem(
-      router.query.itemId
+      router.query.itemid
     );
 
     const allData = async () => {
@@ -93,10 +92,10 @@ export default function Itemid() {
 
   useEffect(() => {
     const load = async () => {
-      if (router.query.itemId) await loadNFT();
+      if (router.query.itemid) await loadNFT();
     };
     load();
-  }, [itemId]);
+  }, [itemid]);
   //check account balance
 
   const { address } = useAccount();
@@ -106,36 +105,33 @@ export default function Itemid() {
     watch: true,
   });
 
-    async function buyNFTs(nft) {
-    
+  async function buyNFTs(nft) {
+    //sign the transaction
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      NFT_MARKETPLACE_ADDRESS,
+      NFT_MARKETPLACE_ABI,
+      signer
+    );
 
-      //sign the transaction
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        NFT_MARKETPLACE_ADDRESS,
-          NFT_MARKETPLACE_ABI,
-        signer
-      );
+    //set the price
+    const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
 
-      //set the price
-      const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
+    //make the sale
+    const transaction = await contract.createMarketSale(
+      nftaddress,
+      nft.tokenId,
+      {
+        value: price,
+      }
+    );
+    await transaction.wait();
 
-      //make the sale
-      const transaction = await contract.createMarketSale(
-        nftaddress,
-        nft.tokenId,
-        {
-          value: price,
-        }
-      );
-      await transaction.wait();
-
-      loadNFTs();
-    }
+    loadNFTs();
+  }
 
   return (
     <div>
-   
       {!nftData && loading ? (
         <Loading />
       ) : (
